@@ -34,7 +34,7 @@ create_main_window(Display *dpy, Window root, UTF8 **array_str, XFontSet font, s
     int screen;
     screen = DefaultScreen(dpy);
 
-    main_win = XCreateSimpleWindow(dpy, root, x, y, (DEF_BUTTON_WIDTH + DEF_INDENT*2 + DEF_BORDER_WIDTH), HEIGHT(buttons_num), 2, BlackPixel(dpy, screen), WhitePixel(dpy, screen));
+    main_win = XCreateSimpleWindow(dpy, root, x, y, (DEF_BUTTON_WIDTH + DEF_INDENT*2 + DEF_BORDER_WIDTH), (HEIGHT(buttons_num) + DEF_BORDER_WIDTH), 2, BlackPixel(dpy, screen), WhitePixel(dpy, screen));
 
     XSelectInput(dpy, main_win, ExposureMask | KeyPressMask | ButtonPressMask | ButtonReleaseMask);
 
@@ -114,7 +114,7 @@ create_main_window(Display *dpy, Window root, UTF8 **array_str, XFontSet font, s
                                 font, 
                                 DefaultGC(dpy, screen), 
                                 DEF_BORDER_WIDTH,
-                                (((DEF_BUTTON_HEIGHT) - logrect.height)/2 - extents->max_logical_extent.y), 
+                                (((DEF_FONT_SIZE) - logrect.height)/2 - extents->max_logical_extent.y), 
                                 (char *)array_str[current_button_num], 
                                 byte_len(array_str[current_button_num]));
             }
@@ -182,7 +182,7 @@ create_button_obj(Display *dpy, Window parent_win, int button_num, int screen_nu
 
     button_win.button_num = button_num;
     button_win.x = DEF_INDENT;
-    button_win.y = DEF_INDENT * (button_num + 1) + (DEF_BUTTON_HEIGHT) * button_num;
+    button_win.y = HEIGHT(button_num);
 
     button_win.button = XCreateSimpleWindow(dpy, parent_win, button_win.x, button_win.y, DEF_BUTTON_WIDTH, DEF_BUTTON_HEIGHT, 1, BlackPixel(dpy, screen_num), b_color.pixel);
 
@@ -220,18 +220,14 @@ set_font(Display *dpy, UTF8 **array_str, size_t string_num, size_t *max_width){
     char *def_string_return;
     char **missing_charset_list_return;
 
-    char size_font_str[3];
-    char font_string[128];
-
     setlocale(LC_ALL, "");
 
-    sprintf(size_font_str, "%d", (int )DEF_FONT_SIZE);
+    char *font_name_fmt = "-*-*-medium-r-normal--%d-*-*-*-*-*-*";
+    char font_name[128];
 
-    strcpy(font_string, "-misc-*-medium-r-normal--");
-    strcat(font_string, size_font_str);
-    strcat(font_string, "-*-*-*-*-*-*");
+    sprintf(font_name, font_name_fmt, (int )DEF_FONT_SIZE);
 
-    font = XCreateFontSet(dpy, font_string,
+    font = XCreateFontSet(dpy, font_name,
                 &missing_charset_list_return, &missing_charset_count_return,
                 &def_string_return);
 

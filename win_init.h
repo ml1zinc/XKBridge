@@ -1,12 +1,12 @@
 #define DEF_FONT_SIZE 18
-#define DEF_BORDER_WIDTH 2
-#define DEF_INDENT 4
-#define DEF_BUTTON_HEIGHT (DEF_INDENT + DEF_FONT_SIZE) 
-
-#define BUTTON_WIDTH(str_width) (DEF_BORDER_WIDTH * 2 + (str_width)) 
-
-#define HEIGHT(str_num) (DEF_INDENT * (str_num + 1) + (DEF_BORDER_WIDTH * 2 + DEF_FONT_SIZE) * str_num + DEF_BORDER_WIDTH)
+#define DEF_BORDER_WIDTH 2 // inside of button
+#define DEF_INDENT 4 // outside of button
 #define MAX_BUTTON_TEXT_LEN 30
+
+#define DEF_BUTTON_HEIGHT (DEF_BORDER_WIDTH * 2 + DEF_FONT_SIZE) 
+#define BUTTON_WIDTH(str_width) (DEF_BORDER_WIDTH * 2 + (str_width)) 
+#define HEIGHT(str_num) (DEF_INDENT * (str_num + 1) + DEF_BUTTON_HEIGHT * str_num )
+
 
 
 typedef struct{
@@ -21,7 +21,6 @@ typedef struct{
 typedef struct{
 	int x, y;
 	int button_num;
-	
 	Window button;
 } Button;
 
