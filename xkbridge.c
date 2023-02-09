@@ -307,6 +307,10 @@ int main(int argc, char **argv){
 
     select_text = get_selected_text();
 
+    if (!select_text){
+        select_text = (UTF8 *)"";        
+    }
+
     // current_state = state.group;
     group_count = kb_desc->ctrls->num_groups;
 
