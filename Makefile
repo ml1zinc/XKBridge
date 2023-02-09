@@ -6,17 +6,13 @@ OBJ     = $(SRC:.c=.o)
 
 LDLIBS  = -lX11
 LDFLAGS = -o $(TARGET)_debug $(LDLIBS)
-
-CFLAGS  = -shared -Wl,-soname,$(TARGET) -fPIC
+ADDFLAGS= -O2 -fpie -Wl,-pie
 CFDEBUG = -Wall -Wextra -g $(LDFLAGS)
 
 all: bin
 
-$(TARGET): $(OBJ)
-	$(CC) $(OBJ) $(CFLAGS) $(CFDEBUG)
-
 bin:
-	$(CC) -o $(TARGET) $(SRC) $(LDLIBS)
+	$(CC) -o $(TARGET) $(SRC) $(LDLIBS) $(ADDFLAGS)
 
 debug:
 	$(CC) $(CFDEBUG) $(SRC)

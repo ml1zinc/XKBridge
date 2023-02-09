@@ -38,3 +38,9 @@ And run XKBridge by shortcut.
 ```shell
 make
 ```
+
+#### Debug
+For debbuging build:
+```shell
+make debug
+```
