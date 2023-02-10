@@ -8,7 +8,6 @@
 #define HEIGHT(str_num) (DEF_INDENT * (str_num + 1) + DEF_BUTTON_HEIGHT * str_num )
 
 
-
 typedef struct{
     unsigned long flags;
     unsigned long functions;

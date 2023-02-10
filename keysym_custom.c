@@ -1019,9 +1019,11 @@ utf8_to_utf32(UTF8* utf8_string, size_t *str_lens){
 
     UTF32 *utf32_string = (UTF32 *)calloc(byte_string_length + 1, sizeof(UTF32));
 
+    void *p_character;
     size_t utf8_next_chr = 0;
     for (size_t i = 0; i < *str_lens; i++){
-       utf8_next_chr += _utf8_to_utf32((const UTF8 *) &utf8_string[utf8_next_chr], (UTF32 *) &utf32_string[i], *str_lens);
+        p_character = &utf8_string[utf8_next_chr];
+        utf8_next_chr += _utf8_to_utf32((const UTF8 *) p_character, (UTF32 *) &utf32_string[i], byte_len(p_character));
     }
 
     return utf32_string;

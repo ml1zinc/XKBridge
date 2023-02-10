@@ -182,7 +182,7 @@ convert_to_langs(UTF32 *symb_str, size_t str_lens, size_t group_count){
         kcd = XKeysymToKeycode(display, old_ksym);
 
         // letter case check
-        if (check_case == True){
+        if (check_case == True && kcd != None){
             KeyCode kcd_ch = XKeysymToKeycode(display, utf32_to_keysym(symb_str[i] + 0x20));
             
             if (kcd_ch == kcd){
@@ -206,7 +206,8 @@ convert_to_langs(UTF32 *symb_str, size_t str_lens, size_t group_count){
                symb_str[i] == XKB_KEY_bar        ||
                symb_str[i] < XKB_KEY_quotedbl    ||
                symb_str[i] == XKB_KEY_underscore ||
-               symb_str[i] == XKB_KEY_asciicircum
+               symb_str[i] == XKB_KEY_asciicircum||
+               kcd == None
                ){
                 keysym_to_utf8(old_ksym, buffer_symb, 8);
             } else {
